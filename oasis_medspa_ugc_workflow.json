@@ -1,0 +1,997 @@
+{
+  "name": "Oasis Luxury Med Spa - UGC Video Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Oasis Luxury Med Spa - Video Generator",
+        "formDescription": "Create engaging UGC-style videos for social media promoting med spa services",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Video Type",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "fieldOptions": {
+                "values": [
+                  { "option": "Call to Action (Book Now/Contact)" },
+                  { "option": "Tips & Education (Skincare/Wellness)" },
+                  { "option": "Before & After (Transformation)" },
+                  { "option": "Service Spotlight" }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Topic/Service",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "fieldOptions": {
+                "values": [
+                  { "option": "General - Why Choose Oasis" },
+                  { "option": "Botox & Fillers" },
+                  { "option": "Laser Treatments (Fotona 4D)" },
+                  { "option": "Microneedling (SkinPen)" },
+                  { "option": "Body Contouring & Skin Tightening" },
+                  { "option": "Hair Removal" },
+                  { "option": "Hair Restoration" },
+                  { "option": "Weight Loss Solutions" },
+                  { "option": "Massage & Relaxation" },
+                  { "option": "SmoothEye Laser Treatment" },
+                  { "option": "Salmon Sperm DNA Treatment" },
+                  { "option": "Professional Skincare Products" },
+                  { "option": "CareCredit Financing Available" },
+                  { "option": "Gift Cards & Special Offers" }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Video Length",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "fieldOptions": {
+                "values": [
+                  { "option": "5 seconds" },
+                  { "option": "10 seconds" },
+                  { "option": "15 seconds" }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Custom Message (Optional)",
+              "fieldType": "textarea",
+              "requiredField": false,
+              "placeholder": "Leave blank to auto-generate, or enter your own script"
+            },
+            {
+              "fieldLabel": "Background Style",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "fieldOptions": {
+                "values": [
+                  { "option": "Luxury Spa Interior (Soft Lighting)" },
+                  { "option": "Clean Clinical (Modern White)" },
+                  { "option": "Elegant Treatment Room" },
+                  { "option": "Neutral Studio (Soft Glow)" }
+                ]
+              }
+            }
+          ]
+        },
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "form-trigger-001",
+      "name": "Video Request Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [-1200, 0],
+      "webhookId": "oasis-medspa-ugc-form"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Character rotation - cycles through diverse med spa presenter characters\n// Uses a simple counter stored in static data to rotate\n\n// ElevenLabs Voice IDs:\n// Female voices for med spa presenters\nconst VOICE_RACHEL = \"21m00Tcm4TlvDq8ikWAM\"; // Rachel - warm, professional\nconst VOICE_BELLA = \"EXAVITQu4vr4xnSDxMaL\";  // Bella - soft, elegant\nconst VOICE_ELLI = \"MF3mGyEYCl7XYWbV9V6O\";   // Elli - young, friendly\n\nconst characters = [\n  {\n    id: 1,\n    gender: \"female\",\n    ethnicity: \"Hispanic/Latina\",\n    hairColor: \"dark brown\",\n    hairStyle: \"long and sleek with soft waves\",\n    skinTone: \"warm olive\",\n    eyeColor: \"brown\",\n    outfit: \"elegant white lab coat over a soft pink blouse\",\n    name: \"Isabella\",\n    voiceId: VOICE_RACHEL,\n    role: \"Lead Aesthetician\"\n  },\n  {\n    id: 2,\n    gender: \"female\",\n    ethnicity: \"African American\",\n    hairColor: \"black\",\n    hairStyle: \"styled in a chic updo\",\n    skinTone: \"rich brown with a radiant glow\",\n    eyeColor: \"dark brown\",\n    outfit: \"sleek black blouse with gold accessories\",\n    name: \"Jasmine\",\n    voiceId: VOICE_BELLA,\n    role: \"Skincare Specialist\"\n  },\n  {\n    id: 3,\n    gender: \"female\",\n    ethnicity: \"Caucasian\",\n    hairColor: \"blonde\",\n    hairStyle: \"shoulder-length with a polished blowout\",\n    skinTone: \"fair with a healthy glow\",\n    eyeColor: \"blue\",\n    outfit: \"chic cream blazer with a simple gold necklace\",\n    name: \"Madison\",\n    voiceId: VOICE_ELLI,\n    role: \"Wellness Consultant\"\n  },\n  {\n    id: 4,\n    gender: \"female\",\n    ethnicity: \"Asian\",\n    hairColor: \"black\",\n    hairStyle: \"straight and glossy, past the shoulders\",\n    skinTone: \"light golden with flawless complexion\",\n    eyeColor: \"dark brown\",\n    outfit: \"modern teal scrubs with a luxury spa badge\",\n    name: \"Mei\",\n    voiceId: VOICE_RACHEL,\n    role: \"Laser Technician\"\n  },\n  {\n    id: 5,\n    gender: \"female\",\n    ethnicity: \"Middle Eastern\",\n    hairColor: \"dark brown\",\n    hairStyle: \"voluminous curls styled to one side\",\n    skinTone: \"warm olive with a dewy finish\",\n    eyeColor: \"hazel\",\n    outfit: \"elegant white blouse with pearl earrings\",\n    name: \"Layla\",\n    voiceId: VOICE_BELLA,\n    role: \"Injectable Specialist\"\n  },\n  {\n    id: 6,\n    gender: \"female\",\n    ethnicity: \"Mixed race\",\n    hairColor: \"caramel highlighted\",\n    hairStyle: \"beachy waves, effortlessly styled\",\n    skinTone: \"caramel with a sun-kissed glow\",\n    eyeColor: \"green\",\n    outfit: \"soft lavender medical aesthetic uniform\",\n    name: \"Aria\",\n    voiceId: VOICE_ELLI,\n    role: \"Body Contouring Expert\"\n  },\n  {\n    id: 7,\n    gender: \"female\",\n    ethnicity: \"South Asian\",\n    hairColor: \"dark brown\",\n    hairStyle: \"long braid swept over one shoulder\",\n    skinTone: \"warm brown with a luminous finish\",\n    eyeColor: \"dark brown\",\n    outfit: \"designer white coat with rose gold accents\",\n    name: \"Priya\",\n    voiceId: VOICE_RACHEL,\n    role: \"Skin Rejuvenation Specialist\"\n  },\n  {\n    id: 8,\n    gender: \"female\",\n    ethnicity: \"Caucasian\",\n    hairColor: \"auburn red\",\n    hairStyle: \"soft curls pinned half-up\",\n    skinTone: \"fair with light freckles\",\n    eyeColor: \"green\",\n    outfit: \"elegant sage green blouse with minimalist jewelry\",\n    name: \"Sienna\",\n    voiceId: VOICE_BELLA,\n    role: \"Massage Therapist\"\n  }\n];\n\n// Get or initialize counter from workflow static data\nlet counter = $getWorkflowStaticData('global').characterCounter || 0;\n\n// Select current character\nconst character = characters[counter % characters.length];\n\n// Increment counter for next run\n$getWorkflowStaticData('global').characterCounter = counter + 1;\n\n// Parse video length to milliseconds\nconst lengthMap = {\n  \"5 seconds\": 5000,\n  \"10 seconds\": 10000,\n  \"15 seconds\": 15000\n};\nconst durationMs = lengthMap[$json[\"Video Length\"]] || 10000;\n\n// Build the image prompt for Gemini\nconst backgroundMap = {\n  \"Luxury Spa Interior (Soft Lighting)\": \"luxurious med spa interior with warm ambient lighting, marble accents, and soft greenery in the background\",\n  \"Clean Clinical (Modern White)\": \"modern clean clinical setting with white walls, sleek equipment, and professional medical aesthetic environment\",\n  \"Elegant Treatment Room\": \"upscale treatment room with plush chair, calming colors, soft diffused lighting, and high-end skincare products visible\",\n  \"Neutral Studio (Soft Glow)\": \"neutral studio background with soft golden glow lighting, clean and elegant\"\n};\nconst backgroundDesc = backgroundMap[$json[\"Background Style\"]] || backgroundMap[\"Luxury Spa Interior (Soft Lighting)\"];\n\nconst imagePrompt = `Create a high-quality, photorealistic portrait of a beautiful ${character.ethnicity} woman in her late 20s to early 30s, working as a ${character.role} at a luxury med spa.\n\nCharacter details:\n- Ethnicity: ${character.ethnicity}\n- Hair: ${character.hairColor}, ${character.hairStyle}\n- Skin tone: ${character.skinTone}\n- Eyes: ${character.eyeColor}, warm and confident\n- Outfit: ${character.outfit}\n- Expression: warm, confident, approachable smile looking directly at camera\n- Pose: head and shoulders portrait, facing forward\n\nStyle requirements:\n- Ultra-realistic, high-end beauty photography quality\n- Soft, flattering professional lighting\n- ${backgroundDesc}\n- Polished, luxurious aesthetic that conveys trust and expertise\n- Clean, radiant skin that showcases the med spa brand\n- Safe for all audiences\n- High resolution, suitable for social media video\n\nThe image should look like a professional headshot from a luxury medical spa marketing campaign — elegant, trustworthy, and aspirational.`;\n\nreturn [{\n  json: {\n    ...($json),\n    character: character,\n    imagePrompt: imagePrompt,\n    durationMs: durationMs,\n    backgroundStyle: $json[\"Background Style\"],\n    videoType: $json[\"Video Type\"],\n    topic: $json[\"Topic/Service\"],\n    customMessage: $json[\"Custom Message (Optional)\"] || \"\",\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "character-rotation-001",
+      "name": "Select Character & Build Prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-960, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate script prompt for Gemini based on video type and topic\n\nconst spaInfo = {\n  name: \"Oasis Luxury Med Spa\",\n  tagline: \"Personalized care meets advanced aesthetics\",\n  phone: \"832-295-3086\",\n  website: \"oasisluxurymedspa.com\",\n  address: \"7930 Broadway Street Suite 116, Pearland, TX\",\n  hours: \"Mon-Fri 9am-6:30pm, Sat 9am-3pm, Sun 10am-1pm\",\n  financing: \"CareCredit financing available\",\n  services: \"Botox, Fillers, Laser Treatments, Microneedling, Body Contouring, Hair Removal, Hair Restoration, Weight Loss, Massage, Professional Skincare\",\n  specialties: \"Fotona 4D Facelift, SmoothEye Laser, SkinPen Microneedling, Salmon Sperm DNA Treatment\",\n  philosophy: \"Upscale, results-driven aesthetic treatments with personalized care in a luxurious environment\"\n};\n\nconst character = $json.character;\nconst videoType = $json.videoType;\nconst topic = $json.topic;\nconst customMessage = $json.customMessage;\nconst durationSec = $json.durationMs / 1000;\n\n// If custom message provided, use it\nif (customMessage && customMessage.trim().length > 0) {\n  return [{\n    json: {\n      ...$json,\n      scriptText: customMessage.trim(),\n      spaInfo: spaInfo\n    }\n  }];\n}\n\n// Build script generation prompt\nlet scriptPrompt = \"\";\n\nif (videoType.includes(\"Call to Action\")) {\n  scriptPrompt = `Write a ${durationSec}-second script for ${character.name}, a ${character.role} at Oasis Luxury Med Spa, promoting their services.\n\nTopic focus: ${topic}\n\nMed Spa info to incorporate:\n- Name: ${spaInfo.name}\n- Phone: ${spaInfo.phone}\n- Website: ${spaInfo.website}\n- Location: Pearland, TX\n- ${spaInfo.financing}\n\nRequirements:\n- The presenter is speaking directly to potential clients\n- Include a clear call to action (book a consultation, call us, visit website)\n- Keep it professional yet warm and approachable\n- Speak with confidence and expertise\n- Make the viewer feel they deserve this luxury treatment\n- MUST be speakable in ${durationSec} seconds (about ${Math.round(durationSec * 2.5)} words max)\n- End with contact info naturally woven in\n\nOnly output the script text, nothing else.`;\n} else if (videoType.includes(\"Tips\")) {\n  scriptPrompt = `Write a ${durationSec}-second educational script for ${character.name}, a ${character.role} at Oasis Luxury Med Spa, sharing expert skincare/wellness tips.\n\nTopic focus: ${topic}\n\nMed Spa info to incorporate:\n- Name: ${spaInfo.name}\n- Specialties: ${spaInfo.specialties}\n- Philosophy: ${spaInfo.philosophy}\n\nRequirements:\n- The presenter is sharing a professional tip or insider knowledge\n- Educational but engaging — position them as the trusted expert\n- Keep it polished and authoritative yet friendly\n- Make viewers feel like they're getting exclusive advice\n- MUST be speakable in ${durationSec} seconds (about ${Math.round(durationSec * 2.5)} words max)\n- Mention Oasis Luxury Med Spa naturally\n\nOnly output the script text, nothing else.`;\n} else if (videoType.includes(\"Before & After\")) {\n  scriptPrompt = `Write a ${durationSec}-second transformation/results script for ${character.name}, a ${character.role} at Oasis Luxury Med Spa.\n\nTopic focus: ${topic}\n\nMed Spa info to incorporate:\n- Name: ${spaInfo.name}\n- Specialties: ${spaInfo.specialties}\n\nRequirements:\n- The presenter is highlighting amazing results clients can expect\n- Build excitement about transformations without making medical claims\n- Use phrases like \"our clients love\" and \"you can see the difference\"\n- Keep it professional, aspirational, and compliant\n- MUST be speakable in ${durationSec} seconds (about ${Math.round(durationSec * 2.5)} words max)\n- End with an invitation to see their own transformation\n\nOnly output the script text, nothing else.`;\n} else {\n  // Service Spotlight\n  scriptPrompt = `Write a ${durationSec}-second service spotlight script for ${character.name}, a ${character.role} at Oasis Luxury Med Spa.\n\nService to spotlight: ${topic}\n\nMed Spa info to incorporate:\n- Name: ${spaInfo.name}\n- Phone: ${spaInfo.phone}\n- Website: ${spaInfo.website}\n- ${spaInfo.financing}\n\nRequirements:\n- The presenter is introducing and explaining a specific service\n- Highlight key benefits and what makes this treatment special\n- Address common concerns or questions about the treatment\n- Keep it informative, professional, and inviting\n- MUST be speakable in ${durationSec} seconds (about ${Math.round(durationSec * 2.5)} words max)\n- Include a soft call to action\n\nOnly output the script text, nothing else.`;\n}\n\nreturn [{\n  json: {\n    ...$json,\n    scriptPrompt: scriptPrompt,\n    spaInfo: spaInfo\n  }\n}];"
+      },
+      "id": "script-prompt-builder-001",
+      "name": "Build Script Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-720, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [{\n    \"parts\": [{\n      \"text\": {{ JSON.stringify($json.scriptPrompt) }}\n    }]\n  }],\n  \"generationConfig\": {\n    \"temperature\": 0.8,\n    \"maxOutputTokens\": 150\n  }\n}",
+        "options": {}
+      },
+      "id": "gemini-script-001",
+      "name": "Gemini - Generate Script",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-480, 0],
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "GEMINI_CREDENTIAL_ID",
+          "name": "Gemini API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract script from Gemini response\nconst geminiResponse = $json;\n\nlet scriptText = \"\";\n\n// Handle case where custom message was provided (scriptText already exists)\nif ($('Build Script Prompt').item.json.customMessage && $('Build Script Prompt').item.json.customMessage.trim().length > 0) {\n  scriptText = $('Build Script Prompt').item.json.customMessage.trim();\n} else {\n  // Extract from Gemini response\n  try {\n    scriptText = geminiResponse.candidates[0].content.parts[0].text.trim();\n  } catch (e) {\n    throw new Error(\"Failed to extract script from Gemini response: \" + JSON.stringify(geminiResponse));\n  }\n}\n\n// Clean up the script - remove quotes if wrapped\nscriptText = scriptText.replace(/^\"|\"$/g, '').trim();\n\nreturn [{\n  json: {\n    ...$('Build Script Prompt').item.json,\n    scriptText: scriptText\n  }\n}];"
+      },
+      "id": "extract-script-001",
+      "name": "Extract Script Text",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-240, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [{\n    \"parts\": [{\n      \"text\": {{ JSON.stringify($json.imagePrompt) }}\n    }]\n  }],\n  \"generationConfig\": {\n    \"responseModalities\": [\"image\", \"text\"],\n    \"imageSafetySettings\": \"block_low_and_above\"\n  }\n}",
+        "options": {}
+      },
+      "id": "gemini-image-001",
+      "name": "Gemini - Generate Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [0, 0],
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "GEMINI_CREDENTIAL_ID",
+          "name": "Gemini API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract image from Gemini response and convert to binary\nconst geminiResponse = $json;\nconst prevData = $('Extract Script Text').item.json;\n\nlet imageBase64 = \"\";\nlet mimeType = \"image/png\";\n\ntry {\n  // Gemini returns image in candidates[0].content.parts - find the image part\n  const parts = geminiResponse.candidates[0].content.parts;\n  for (const part of parts) {\n    if (part.inlineData) {\n      imageBase64 = part.inlineData.data;\n      mimeType = part.inlineData.mimeType || \"image/png\";\n      break;\n    }\n  }\n  \n  if (!imageBase64) {\n    throw new Error(\"No image data found in Gemini response\");\n  }\n} catch (e) {\n  throw new Error(\"Failed to extract image from Gemini response: \" + e.message + \" Response: \" + JSON.stringify(geminiResponse).substring(0, 500));\n}\n\n// Return with binary data\nconst binaryData = Buffer.from(imageBase64, 'base64');\n\nreturn [{\n  json: {\n    ...prevData,\n    imageMimeType: mimeType\n  },\n  binary: {\n    image: {\n      data: imageBase64,\n      mimeType: mimeType,\n      fileName: `avatar_${prevData.character.name.toLowerCase()}.png`\n    }\n  }\n}];"
+      },
+      "id": "extract-image-001",
+      "name": "Extract Image to Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.elevenlabs.io/v1/text-to-speech/{{ $json.character.voiceId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "audio/mpeg"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": {{ JSON.stringify($json.scriptText) }},\n  \"model_id\": \"eleven_turbo_v2_5\",\n  \"voice_settings\": {\n    \"stability\": 0.5,\n    \"similarity_boost\": 0.75,\n    \"style\": 0.4,\n    \"use_speaker_boost\": true\n  }\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "elevenlabs-tts-001",
+      "name": "ElevenLabs TTS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 0],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ELEVENLABS_CREDENTIAL_ID",
+          "name": "ElevenLabs API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalize ElevenLabs MP3 binary output to binary.audio\n// and preserve the image binary\n\nconst prevData = $('Extract Image to Binary').item.json;\nconst prevBinary = $('Extract Image to Binary').item.binary;\n\nif (!$binary || Object.keys($binary).length === 0) {\n  throw new Error(\"No binary from ElevenLabs. Check your ElevenLabs credential and ensure Response Format = File.\");\n}\n\n// ElevenLabs returns binary under 'data'\nconst audioSrc = $binary.data ? \"data\" : Object.keys($binary)[0];\n\nreturn [{\n  json: prevData,\n  binary: {\n    image: prevBinary.image,\n    audio: $binary[audioSrc]\n  }\n}];"
+      },
+      "id": "normalize-audio-001",
+      "name": "Normalize Audio Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hedra.com/web-app/public/assets",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"name\":\"avatar.png\",\"type\":\"image\"}",
+        "options": {}
+      },
+      "id": "hedra-create-image-asset-001",
+      "name": "Hedra - Create Image Asset",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [960, -120],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HEDRA_CREDENTIAL_ID",
+          "name": "Hedra API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hedra.com/web-app/public/assets",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"name\":\"voice.mp3\",\"type\":\"audio\"}",
+        "options": {}
+      },
+      "id": "hedra-create-audio-asset-001",
+      "name": "Hedra - Create Audio Asset",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [960, 120],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HEDRA_CREDENTIAL_ID",
+          "name": "Hedra API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.hedra.com/web-app/public/assets/{{ $json.id }}/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "image"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "hedra-upload-image-001",
+      "name": "Hedra - Upload Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, -120],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HEDRA_CREDENTIAL_ID",
+          "name": "Hedra API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.hedra.com/web-app/public/assets/{{ $json.id }}/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "hedra-upload-audio-001",
+      "name": "Hedra - Upload Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 120],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HEDRA_CREDENTIAL_ID",
+          "name": "Hedra API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge results from both upload branches and prepare for generation\nconst imageAssetId = $('Hedra - Create Image Asset').item.json.id;\nconst audioAssetId = $('Hedra - Create Audio Asset').item.json.id;\nconst originalData = $('Normalize Audio Binary').item.json;\n\nreturn [{\n  json: {\n    ...originalData,\n    imageAssetId: imageAssetId,\n    audioAssetId: audioAssetId\n  }\n}];"
+      },
+      "id": "merge-assets-001",
+      "name": "Merge Asset IDs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1440, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://api.hedra.com/web-app/public/models",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "hedra-get-models-001",
+      "name": "Hedra - Get Models",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1680, 0],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HEDRA_CREDENTIAL_ID",
+          "name": "Hedra API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pick the best Hedra model for realistic video\nconst models = $json;\nconst prevData = $('Merge Asset IDs').item.json;\n\nif (!Array.isArray(models) || models.length === 0) {\n  throw new Error(\"No models returned from Hedra. Check your Hedra API credential.\");\n}\n\n// Try to find a model that supports video, prefer newer/better ones\nlet selectedModel = models[0];\nfor (const model of models) {\n  if (model.name && model.name.toLowerCase().includes('character')) {\n    selectedModel = model;\n    break;\n  }\n}\n\nreturn [{\n  json: {\n    ...prevData,\n    modelId: selectedModel.id,\n    modelName: selectedModel.name || 'default'\n  }\n}];"
+      },
+      "id": "pick-model-001",
+      "name": "Pick Hedra Model",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1920, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hedra.com/web-app/public/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"video\",\n  \"ai_model_id\": {{ JSON.stringify($json.modelId) }},\n  \"start_keyframe_id\": {{ JSON.stringify($json.imageAssetId) }},\n  \"audio_id\": {{ JSON.stringify($json.audioAssetId) }},\n  \"generated_video_inputs\": {\n    \"text_prompt\": {{ JSON.stringify($json.scriptText) }},\n    \"resolution\": \"540p\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration_ms\": {{ $json.durationMs }}\n  }\n}",
+        "options": {}
+      },
+      "id": "hedra-create-generation-001",
+      "name": "Hedra - Create Generation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2160, 0],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HEDRA_CREDENTIAL_ID",
+          "name": "Hedra API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Store generation ID and original data for polling\nconst generationId = $json.id;\nconst prevData = $('Pick Hedra Model').item.json;\n\nreturn [{\n  json: {\n    ...prevData,\n    generationId: generationId\n  }\n}];"
+      },
+      "id": "store-generation-id-001",
+      "name": "Store Generation ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2400, 0]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.hedra.com/web-app/public/generations/{{ $json.generationId }}/status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "hedra-get-status-001",
+      "name": "Hedra - Get Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2640, 0],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HEDRA_CREDENTIAL_ID",
+          "name": "Hedra API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check status and preserve all data\nconst status = $json.status;\nconst downloadUrl = $json.download_url || $json.url || null;\nconst errorMessage = $json.error_message || null;\nconst prevData = $('Store Generation ID').item.json;\n\nreturn [{\n  json: {\n    ...prevData,\n    status: status,\n    downloadUrl: downloadUrl,\n    errorMessage: errorMessage\n  }\n}];"
+      },
+      "id": "check-status-001",
+      "name": "Check Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2880, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-complete",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "complete",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-complete-001",
+      "name": "IF Complete?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3120, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-error",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "error",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-error-001",
+      "name": "IF Error?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3360, 200]
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "seconds"
+      },
+      "id": "wait-001",
+      "name": "Wait 10s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [3600, 200],
+      "webhookId": "hedra-poll-wait"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Throw error with message from Hedra\nconst errorMsg = $json.errorMessage || \"Unknown Hedra generation error\";\nthrow new Error(\"Hedra Error: \" + errorMsg);"
+      },
+      "id": "throw-error-001",
+      "name": "Throw Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3600, 400]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.downloadUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "download-video-001",
+      "name": "Download Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3360, -200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalize video binary for Google Drive upload\nconst prevData = $('Check Status').item.json;\n\nif (!$binary || Object.keys($binary).length === 0) {\n  throw new Error(\"No video binary found. Check that Download Video has Response Format = File.\");\n}\n\nconst src = $binary.data ? \"data\" : Object.keys($binary)[0];\n\n// Generate filename with character name and timestamp\nconst timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);\nconst filename = `oasis_medspa_${prevData.character.name.toLowerCase()}_${timestamp}.mp4`;\n\nreturn [{\n  json: {\n    ...prevData,\n    filename: filename\n  },\n  binary: {\n    video: {\n      ...$binary[src],\n      fileName: filename\n    }\n  }\n}];"
+      },
+      "id": "normalize-video-001",
+      "name": "Normalize Video Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3600, -200]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "name": "={{ $json.filename }}",
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_DRIVE_FOLDER_ID",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "drive-upload-001",
+      "name": "Google Drive - Upload",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [3840, -200],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GOOGLE_DRIVE_CREDENTIAL_ID",
+          "name": "Google Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare data for Google Sheets logging\nconst driveResponse = $json;\nconst prevData = $('Normalize Video Binary').item.json;\n\n// Build the Drive file URL\nconst fileId = driveResponse.id;\nconst driveUrl = `https://drive.google.com/file/d/${fileId}/view`;\n\nreturn [{\n  json: {\n    timestamp: prevData.timestamp,\n    characterName: prevData.character.name,\n    characterRole: prevData.character.role,\n    characterEthnicity: prevData.character.ethnicity,\n    videoType: prevData.videoType,\n    topic: prevData.topic,\n    scriptText: prevData.scriptText,\n    durationSeconds: prevData.durationMs / 1000,\n    backgroundStyle: prevData.backgroundStyle,\n    filename: prevData.filename,\n    driveFileId: fileId,\n    driveUrl: driveUrl,\n    status: \"Success\"\n  }\n}];"
+      },
+      "id": "prepare-sheets-data-001",
+      "name": "Prepare Sheets Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4080, -200]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Video Log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $json.timestamp }}",
+            "Character": "={{ $json.characterName }}",
+            "Role": "={{ $json.characterRole }}",
+            "Ethnicity": "={{ $json.characterEthnicity }}",
+            "Video Type": "={{ $json.videoType }}",
+            "Topic": "={{ $json.topic }}",
+            "Script": "={{ $json.scriptText }}",
+            "Duration (sec)": "={{ $json.durationSeconds }}",
+            "Background": "={{ $json.backgroundStyle }}",
+            "Filename": "={{ $json.filename }}",
+            "Drive URL": "={{ $json.driveUrl }}",
+            "Status": "={{ $json.status }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "sheets-log-001",
+      "name": "Google Sheets - Log Video",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [4320, -200],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Video created successfully!\",\n  \"character\": {{ JSON.stringify($('Prepare Sheets Data').item.json.characterName) }},\n  \"role\": {{ JSON.stringify($('Prepare Sheets Data').item.json.characterRole) }},\n  \"driveUrl\": {{ JSON.stringify($('Prepare Sheets Data').item.json.driveUrl) }},\n  \"script\": {{ JSON.stringify($('Prepare Sheets Data').item.json.scriptText) }}\n}",
+        "options": {}
+      },
+      "id": "respond-success-001",
+      "name": "Respond - Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [4560, -200]
+    }
+  ],
+  "connections": {
+    "Video Request Form": {
+      "main": [
+        [
+          {
+            "node": "Select Character & Build Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Character & Build Prompts": {
+      "main": [
+        [
+          {
+            "node": "Build Script Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Script Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Generate Script",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Generate Script": {
+      "main": [
+        [
+          {
+            "node": "Extract Script Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Script Text": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Generate Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Generate Image": {
+      "main": [
+        [
+          {
+            "node": "Extract Image to Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Image to Binary": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs TTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs TTS": {
+      "main": [
+        [
+          {
+            "node": "Normalize Audio Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Audio Binary": {
+      "main": [
+        [
+          {
+            "node": "Hedra - Create Image Asset",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Hedra - Create Audio Asset",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hedra - Create Image Asset": {
+      "main": [
+        [
+          {
+            "node": "Hedra - Upload Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hedra - Create Audio Asset": {
+      "main": [
+        [
+          {
+            "node": "Hedra - Upload Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hedra - Upload Image": {
+      "main": [
+        [
+          {
+            "node": "Merge Asset IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hedra - Upload Audio": {
+      "main": [
+        [
+          {
+            "node": "Merge Asset IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Asset IDs": {
+      "main": [
+        [
+          {
+            "node": "Hedra - Get Models",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hedra - Get Models": {
+      "main": [
+        [
+          {
+            "node": "Pick Hedra Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Hedra Model": {
+      "main": [
+        [
+          {
+            "node": "Hedra - Create Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hedra - Create Generation": {
+      "main": [
+        [
+          {
+            "node": "Store Generation ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Generation ID": {
+      "main": [
+        [
+          {
+            "node": "Hedra - Get Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hedra - Get Status": {
+      "main": [
+        [
+          {
+            "node": "Check Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status": {
+      "main": [
+        [
+          {
+            "node": "IF Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Complete?": {
+      "main": [
+        [
+          {
+            "node": "Download Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Error?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Error?": {
+      "main": [
+        [
+          {
+            "node": "Throw Error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 10s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 10s": {
+      "main": [
+        [
+          {
+            "node": "Hedra - Get Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Video": {
+      "main": [
+        [
+          {
+            "node": "Normalize Video Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Video Binary": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Upload": {
+      "main": [
+        [
+          {
+            "node": "Prepare Sheets Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Sheets Data": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Log Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Log Video": {
+      "main": [
+        [
+          {
+            "node": "Respond - Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "instanceId": "oasis-luxury-medspa-ugc-generator"
+  },
+  "tags": []
+}
